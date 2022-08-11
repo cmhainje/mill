@@ -1,0 +1,31 @@
+.sidebar-manager {
+  height: 100%;
+  width: 100%;
+  display: flex;
+}
+
+.sidebar-left,
+.sidebar-right {
+  height: 100%;
+  width: 150px;
+  flex: none;
+  background-color: #f4f4f4;
+}
+
+.sidebar-handle {
+  height: 100%;
+  width: 8px;
+  margin-left: -4px;
+  margin-right: -4px;
+  z-index: 1;
+  cursor: ew-resize;
+  flex: none;
+}
+.sidebar-handle:hover {
+  background-color: #c0c0c088;
+}
+
+.main {
+  height: 100%;
+  flex: auto;
+}
