@@ -1,7 +1,28 @@
+.left-sidebar-button,
+.right-sidebar-button {
+  position: fixed;
+  top: 0;
+  height: 36px;
+  width: 150px;
+  display: flex;
+  align-items: center;
+}
+
+.left-sidebar-button {
+  left: 0;
+  flex-direction: row-reverse;
+}
+
+.right-sidebar-button {
+  right: 0;
+  flex-direction: row;
+}
+
 .sidebar-manager {
   height: 100%;
   width: 100%;
   display: flex;
+  flex-direction: row;
 }
 
 .sidebar-left,

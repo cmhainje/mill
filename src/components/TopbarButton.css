@@ -1,0 +1,17 @@
+.topbar-button {
+  width: 24px;
+  height: 24px;
+  fill: none;
+  border: none;
+  margin: 0;
+  padding: 0;
+  background-color: inherit;
+  border-radius: 4px;
+}
+.topbar-button:hover {
+  background-color: #c8c8c888;
+}
+
+.topbar-button > i {
+  font-size: 17px;
+}

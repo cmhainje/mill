@@ -1,9 +1,12 @@
 import { useState } from "react";
-import "./SidebarManager.css";
 import LeftSidebar from "./LeftSidebar";
+import TopbarButton from "./TopbarButton";
 
-const MIN_SIDEBAR_WIDTH = 40;
-const MIN_MAIN_WIDTH = 20;
+import "./SidebarManager.css";
+
+const MIN_WIDTH_L = 40;
+const MIN_WIDTH_M = 40;
+const MIN_WIDTH_R = 40;
 
 function clamp(x: number, lo: number, hi: number) {
   if (lo > hi) {
@@ -25,12 +28,12 @@ export default function SidebarManager() {
 
     if (right) {
       const newWidth = window.innerWidth - x;
-      const maxWidth = window.innerWidth - widthL - MIN_MAIN_WIDTH;
-      setWidthR(clamp(newWidth, MIN_SIDEBAR_WIDTH, maxWidth));
+      const maxWidth = window.innerWidth - widthL - MIN_WIDTH_M;
+      setWidthR(clamp(newWidth, MIN_WIDTH_R, maxWidth));
     } else {
       const newWidth = x;
-      const maxWidth = window.innerWidth - widthR - MIN_MAIN_WIDTH;
-      setWidthL(clamp(newWidth, MIN_SIDEBAR_WIDTH, maxWidth));
+      const maxWidth = window.innerWidth - widthR - MIN_WIDTH_M;
+      setWidthL(clamp(newWidth, MIN_WIDTH_L, maxWidth));
     }
   }
 
@@ -57,28 +60,59 @@ export default function SidebarManager() {
     }
   }
 
-  return (
-    <div className="sidebar-manager">
-      {visL && (
-        <>
-          <LeftSidebar width={widthL} />
+  function leftSidebarButtonContainerWidth(): number {
+    return Math.max(visL ? widthL : 0, 24);
+    // return Math.max(visL ? widthL : 0, 74 + 24);
+  }
 
-          <div
-            className="sidebar-handle"
-            onMouseDown={(e) => startResize(false)}
-          ></div>
-        </>
-      )}
-      <div className="main"></div>
-      {visR && (
-        <>
-          <div
-            className="sidebar-handle"
-            onMouseDown={(e) => startResize(true)}
-          ></div>
-          <div className="sidebar-right" style={{ width: widthR }}></div>
-        </>
-      )}
-    </div>
+  function rightSidebarButtonContainerWidth(): number {
+    return Math.max(visR ? widthR : 0, 24);
+  }
+
+  return (
+    <>
+      <div
+        className="left-sidebar-button"
+        style={{ width: leftSidebarButtonContainerWidth() }}
+      >
+        <TopbarButton
+          name="layout-sidebar"
+          aria="Toggle left sidebar"
+          onClick={(e) => setVisL(!visL)}
+        />
+      </div>
+      <div
+        className="right-sidebar-button"
+        style={{ width: rightSidebarButtonContainerWidth() }}
+      >
+        <TopbarButton
+          name="layout-sidebar-reverse"
+          aria="Toggle right sidebar"
+          onClick={(e) => setVisR(!visR)}
+        />
+      </div>
+      <div className="sidebar-manager">
+        {visL && (
+          <>
+            <LeftSidebar width={widthL} />
+
+            <div
+              className="sidebar-handle"
+              onMouseDown={(e) => startResize(false)}
+            ></div>
+          </>
+        )}
+        <div className="main"></div>
+        {visR && (
+          <>
+            <div
+              className="sidebar-handle"
+              onMouseDown={(e) => startResize(true)}
+            ></div>
+            <div className="sidebar-right" style={{ width: widthR }}></div>
+          </>
+        )}
+      </div>
+    </>
   );
 }
